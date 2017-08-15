@@ -18,7 +18,11 @@ class AuditLogService {
 
     private $config = [];
 
-
+    /**
+     * Create the logger class based on the configuration
+     * 
+     * @return type
+     */
     private function getLoggerClass() {
 
         if (isset($this->config['db_type'])) {
@@ -31,6 +35,11 @@ class AuditLogService {
             return \EZELog\Models\AuditTrailSQL::class;
     }
 
+    /**
+     * Find out the IPs of the visitor/user
+     *
+     * @return type
+     */
     private function getIp(){
         foreach (array('HTTP_CLIENT_IP', 'HTTP_X_FORWARDED_FOR', 'HTTP_X_FORWARDED', 'HTTP_X_CLUSTER_CLIENT_IP', 'HTTP_FORWARDED_FOR', 'HTTP_FORWARDED', 'REMOTE_ADDR') as $key){
             if (array_key_exists($key, $_SERVER) === true){
@@ -52,6 +61,11 @@ class AuditLogService {
         }
     }
 
+    /**
+     * Create the default properties
+     *
+     * @return type
+     */
     private function getProperties() {
         $properties = array(
             'user' => '',
@@ -79,23 +93,31 @@ class AuditLogService {
         $this->config = $config;
     }
 
+    /**
+     * Log the message to db
+     *
+     * @param type $message
+     * @param type $username
+     */
     public function log($message, $username = null)  {
 
         $properties = $this->getProperties();
         $properties['action'] = $message;
-        
+
         if (!is_null($username))
             $properties['user'] = $username;
 
-        $class = $this->getLoggerClass();
-        $classObj = new $class($properties);
-        $classObj->setTable($this->config['table_name']);
-        if (!empty($this->config['db_connection']))
-            $classObj->setConnection($this->config['db_connection']);
+        try {
+            $class = $this->getLoggerClass();
+            $classObj = new $class($properties);
+            $classObj->setTable($this->config['table_name']);
+            if (!empty($this->config['db_connection']))
+                $classObj->setConnection($this->config['db_connection']);
 
-        $classObj->save();
-
-
-        return $properties;
+            $classObj->save();
+        }
+        catch (Exception $ex) {
+            error_log("There was an error creating the audit log. " . $ex->getMessage());
+        }
     }
 }
