@@ -16,6 +16,7 @@ use Jenssegers\Mongodb\Eloquent\Model as MongoModel;
 
 class AuditTrailMongo extends MongoModel{
 
+    // default
     protected $collection = "ezelog";
     protected $connection = '';
 
