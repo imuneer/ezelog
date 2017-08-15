@@ -1,0 +1,21 @@
+{
+  "name": "ezelink/ezelog",
+  "description": "Loggin platform for laravel 5.2 applications",
+  "type": "application",
+  "authors": [
+    {
+      "name": "Muneer Shaheed",
+      "email": "muneer@ezelink.com"
+    }
+  ],
+  "minimum-stability": "dev",
+  "autoload": {
+    "psr-4": {
+      "EZELog\\": "src/"
+    }
+  },
+  "require": {
+    "php": ">=5.4",
+    "ezelink/ezelog": "dev-master"
+  }
+}
