@@ -1,7 +1,7 @@
 {
   "name": "ezelink/ezelog",
+  "type": "package",
   "description": "Loggin platform for laravel 5.2 applications",
-  "type": "application",
   "authors": [
     {
       "name": "Muneer Shaheed",
@@ -15,7 +15,6 @@
     }
   },
   "require": {
-    "php": ">=5.4",
-    "ezelink/ezelog": "dev-master"
+    "php": ">=5.4"
   }
 }
