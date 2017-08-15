@@ -64,7 +64,7 @@ class AuditLogService {
             'query' => $_SERVER['QUERY_STRING'],
             'ezemanage_user' => false,
         );
-        
+
         $user = Auth::user();
         if (!empty($user)) {
             $properties['user'] = $user->username;
@@ -79,10 +79,13 @@ class AuditLogService {
         $this->config = $config;
     }
 
-    public function log($message)  {
+    public function log($message, $username = null)  {
 
         $properties = $this->getProperties();
         $properties['action'] = $message;
+        
+        if (!is_null($username))
+            $properties['user'] = $username;
 
         $class = $this->getLoggerClass();
         $classObj = new $class($properties);
