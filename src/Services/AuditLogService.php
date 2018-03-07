@@ -67,15 +67,24 @@ class AuditLogService {
      * @return type
      */
     private function getProperties() {
+        $host = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : '';
+        $serverAgent = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
+        $reqUri = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
+        $query = isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '';
+        
+        if (php_sapi_name() == "cli") {
+            $host = "CLI Application";
+        }
+        
         $properties = array(
             'user' => '',
             'action_time' => new \DateTime(),
             'timestamp' => microtime(true),
             'from_ip' => $this->getIp(),
-            'server' => $_SERVER['HTTP_HOST'],
-            'user_agent' => $_SERVER['HTTP_USER_AGENT'],
-            'uri' => $_SERVER['REQUEST_URI'],
-            'query' => $_SERVER['QUERY_STRING'],
+            'server' => $host,
+            'user_agent' => $serverAgent,
+            'uri' => $reqUri,
+            'query' => $query,
             'ezemanage_user' => false,
         );
 
