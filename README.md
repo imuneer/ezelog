@@ -11,7 +11,7 @@ composer require ezelink/ezelog
 
 or add the following line to the composer.json under the `require` section and update composer
 ```
-"ezelink/ezelog": "^1.0"
+"ezelink/ezelog": "@dev"
 composer update
 ```
 
