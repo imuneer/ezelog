@@ -30,4 +30,5 @@ EZELog\Facades\AuditLog::log('user login failed');
 OR
 ```
 EZELog\Facades\AuditLog::log('user login failed', $username);
+
 ```
