@@ -71,9 +71,11 @@ class AuditLogService {
         $serverAgent = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
         $reqUri = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
         $query = isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '';
+        $ip = $this->getIp();
         
         if (php_sapi_name() == "cli") {
             $host = "CLI Application";
+            $ip = gethostname();
         }
         
         $properties = array(
