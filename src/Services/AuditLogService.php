@@ -112,10 +112,11 @@ class AuditLogService {
      * @param type $message
      * @param type $username
      */
-    public function log($message, $username = null)  {
+    public function log($message, $username = null, $type = 'audit')  {
 
         $properties = $this->getProperties();
         $properties['action'] = $message;
+        $properties['log_type'] = $type;
 
         if (!is_null($username))
             $properties['user'] = $username;
